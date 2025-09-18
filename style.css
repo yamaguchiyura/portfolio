@@ -1,0 +1,537 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ページ全体にフェードを適用 */
+/* フェードイン・フェードアウト共通 */
+.fade-page {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.fade-page.show {
+  opacity: 1;
+}
+
+/* フォント設定 */
+body {
+    background: #38363A;
+    color: #FFD98E;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 900;
+}
+
+h1,
+h2 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 4rem;
+    letter-spacing: 0.05em;
+}
+
+h2 {
+    font-size: 3rem;
+    letter-spacing: 0.04em;
+}
+
+p,
+li {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+/* header */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: saturate(180%) blur(12px);
+    background-color: rgba(56, 54, 58, 0.8);
+}
+
+.symbol {
+  width: 80px; /* 横幅を40pxに固定 */
+  height: auto; /* 高さは自動で調整 */
+  vertical-align: middle; /* テキストと並べたいとき */
+  margin-right: 10px; /* テキストとの間隔 */
+}
+
+
+/* nav PC表示 */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: #FFD98E;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #fff;
+}
+
+/* ハンバーガー */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 110;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #FFD98E;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.menu-toggle:hover {
+    background-color: transparent;
+    /* 透明にして白くならないように */
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.menu-toggle:hover span {
+    transform: scaleX(1.3);
+    transition: transform 0.3s ease;
+}
+
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 70%;
+        background-color: #1e1d1f;
+        padding: 5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: flex-start;
+        transition: right 0.3s ease-in-out;
+        z-index: 105;
+    }
+
+    nav.active {
+        right: 0;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    nav a {
+        font-size: 1.5rem;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+
+/* スナップスクロールコンテナ */
+
+/* スナップする子要素 */
+.snap-child {
+    scroll-snap-align: start;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 3rem;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-padding-top: 80px;
+}
+
+/* スナップ有効時のみ */
+.snap-container.snap-enabled {
+    scroll-snap-type: y mandatory;
+}
+
+
+/* --- トップセクション新レイアウト --- */
+.top-section {
+    padding: 0;
+}
+
+/* ヒーロー2カラムレイアウト */
+/* hero-split全体：横並び＆位置調整 */
+.hero-split {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 4rem;
+}
+
+.hero-title {
+    line-height: 1em;
+    font-size: 70px;
+}
+
+/* テキスト：画像に少しかぶるように右寄せ＆上に持ち上げ */
+.hero-text {
+    z-index: 2;
+    margin-right: -40px;
+    /* ← 画像にかぶる */
+    margin-bottom: 30px;
+    /* ↑ 画像より少し上に */
+}
+
+/* 画像：テキストの下に回るよう調整 */
+.hero-photo {
+    z-index: 1;
+    margin-left: -30px;
+    /* ← かぶり具合の調整 */
+}
+
+.hero-photo img {
+    width: 500px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* アニメーション定義 */
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: fadeLeft 1s ease-out forwards;
+    animation-delay: 0.2s;
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    animation: fadeRight 1s ease-out forwards;
+    animation-delay: 1s;
+    /* ← 画像の表示を少し遅らせる */
+}
+
+@keyframes fadeLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* レスポンシブ調整（スマホなど） */
+@media (max-width: 768px) {
+    .hero-split {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        margin-top: 6rem;
+    }
+
+    .hero-text {
+        margin: 0;
+        text-align: center;
+    }
+
+    .hero-photo {
+        margin: 0;
+    }
+}
+
+/* ABOUT */
+.section-subtitle1 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #FFD98E;
+    /* ゴールド系 */
+    margin-bottom: 1.5rem;
+    /* 下のグリッドとの余白 */
+    text-align: center;
+    /* 中央寄せ */
+    letter-spacing: 0.05em;
+    margin-top: -10px;
+}
+
+.about-section {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+p {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-weight: 200;
+    font-size: 18px;
+}
+
+/* Works */
+.section-subtitle2 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #FFD98E;
+    /* ゴールド系 */
+    margin-bottom: 1.5rem;
+    /* 下のグリッドとの余白 */
+    text-align: center;
+    /* 中央寄せ */
+    letter-spacing: 0.05em;
+    margin-top: -50px;
+}
+
+.works-section {
+    padding: 10rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.works-section h2 {
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
+    color: #FFD98E;
+    text-align: center;
+}
+
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    /* ← 上下左右に少し余白を追加 */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.work-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+
+.work-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* オーバーレイ背景 */
+.work-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    /* ← 黒背景にする */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+/* ホバー時に黒背景表示 */
+.work-card:hover::before {
+    opacity: 1;
+}
+
+/* 文字表示 */
+.work-card::after {
+    font-family: 'Noto Sans JP', sans-serif;
+    content: attr(data-title);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1.2rem;
+    z-index: 2;
+    opacity: 0;
+    font-weight: 400;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    text-align: center;
+    white-space: pre-wrap;
+}
+
+/* ホバー時に文字表示 */
+.work-card:hover::after {
+    opacity: 1;
+}
+
+/* ホバーで画像ズーム */
+.work-card:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .works-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* CONTACT */
+#contact {
+  margin-bottom: 30px;   /* セクション下の余白を小さく */
+  padding-bottom: 40px;  /* 内側の余白も抑えめに */
+}
+
+footer {
+  margin-top: 10px; /* フッターとの間 */
+}
+
+.section-subtitle3 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #FFD98E;
+  text-align: center;
+  letter-spacing: 0.05em;
+  margin: -10px 0 1.5rem; /* 上は少し詰めて下だけ余白 */
+}
+
+.contact-section {
+  margin: 4rem auto;   /* 20rem → 4rem に縮小 */
+  max-width: 600px;
+  text-align: center;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+input,
+textarea {
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    border: none;
+    background: #4a474d;
+    color: #FFD98E;
+    transition: background 0.3s ease;
+    resize: none;
+}
+
+input:focus,
+textarea:focus {
+    background: #38363A;
+    outline: none;
+}
+
+button {
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    background: #FFD98E;
+    color: #38363A;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #fff;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+footer p {
+    left: 3px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #FFD98E;
+    z-index: 1000;
+    font-weight: 300 !important;
+}
